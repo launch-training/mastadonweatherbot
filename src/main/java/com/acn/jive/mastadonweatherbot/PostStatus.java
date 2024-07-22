@@ -1,5 +1,6 @@
 package com.acn.jive.mastadonweatherbot;
 
+import com.acn.jive.mastadonweatherbot.weather.Weather;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.MediaAttachment;
 import social.bigbone.api.entity.data.Visibility;
@@ -15,7 +16,7 @@ public class PostStatus {
     private static final String INSTANCE = "mastodon.social";
     private static final String ACCESS_TOKEN = "j1teFkzqidPCXSsl9iBLfjy3csKpLKtnNnPwkfqJOIg";
 
-    public static void main(String[] args) throws BigBoneRequestException {
+    public void postStatus(Weather weather) throws BigBoneRequestException {
 
         // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(INSTANCE)
@@ -23,18 +24,22 @@ public class PostStatus {
                 .build();
 
         // Upload image (später ggf. mit classLoader?)
+        /*
         final File uploadFile = new File("./src/main/resources/cake.jpg");
         final MediaAttachment uploadedFile = client.media().uploadMediaAsync(
                 new FileAsMediaAttachment(uploadFile, "image/jpg")
         ).execute();
         final String mediaId = uploadedFile.getId();
+        */
+
 
         // Post status
-        final String statusText = "Isn't that delicious?";
-        final List<String> mediaIds = Collections.singletonList(mediaId);
+        String statusText = "The weather in " + weather.getCity() + " is " + weather.getDescription().toLowerCase() + " and the temperature is " + weather.getTemperature() + "°C";
+
+        //final List<String> mediaIds = Collections.singletonList(mediaId);
         final Visibility visibility = Visibility.PRIVATE;
 
-        client.statuses().postStatus(statusText, mediaIds, visibility).execute();
+        client.statuses().postStatus(statusText, null, visibility).execute();
 
     }
 }

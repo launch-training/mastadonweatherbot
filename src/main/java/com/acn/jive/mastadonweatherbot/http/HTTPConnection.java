@@ -1,10 +1,10 @@
-package com.acn.jive.mastadonweatherbot;
+package com.acn.jive.mastadonweatherbot.http;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Connection {
+public class HTTPConnection {
 
     public HttpURLConnection createApiConnection(String urlString) throws IOException{
             // attempt to create connection

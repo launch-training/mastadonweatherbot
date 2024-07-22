@@ -1,4 +1,4 @@
-package com.acn.jive.mastadonweatherbot;
+package com.acn.jive.mastadonweatherbot.weather;
 
 public class WeatherException extends Exception{
 

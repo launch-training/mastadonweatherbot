@@ -1,5 +1,6 @@
-package com.acn.jive.mastadonweatherbot;
+package com.acn.jive.mastadonweatherbot.weather;
 
+import com.acn.jive.mastadonweatherbot.http.HTTPConnection;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -14,12 +15,12 @@ import java.util.Scanner;
 public class WeatherApiService {
 
 
-    public Optional<Weather> readWeatherData(String city, Connection connection) throws WeatherException {
+    public Optional<Weather> readWeatherData(String city, HTTPConnection HTTPConnection) throws WeatherException {
         try{
             // 1. Fetch the API response based on API Link
             String API_KEY = "437ff40d4bf2412581d135526241807";
             String url = "https://api.weatherapi.com/v1/current.json?key=" + API_KEY + "&q=" + city; // ab ? request param
-            HttpURLConnection apiConnection = connection.createApiConnection(url);
+            HttpURLConnection apiConnection = HTTPConnection.createApiConnection(url);
 
             // check for response status
             // 200 - means that the connection was a success
