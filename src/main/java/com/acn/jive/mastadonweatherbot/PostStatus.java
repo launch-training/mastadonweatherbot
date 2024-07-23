@@ -31,43 +31,47 @@ public class PostStatus {
 
         // Download image from URL weather.getUrl()
         try {
-            // To create a temp file on specified directory
-            File tempFile = File.createTempFile(
-                    "icon", ".tmp",
-                    new File(System.getProperty("java.io.tmpdir"))); // System property hat gespeichert wo mein temp-Ordner ist
-            System.out.println(
-                    "Temporary file is located on Specified location: "
-                            + tempFile.getAbsolutePath());
+            File tempFile = createFile();
+            downloadImg(weather, tempFile);
+            String mediaId = uploadImg(client, tempFile);
 
-            // String zu URL-Object
-            URL url = new URL("https:" + weather.getIconUrl());
-            ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
-
-            FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
-            FileChannel fileChannel = fileOutputStream.getChannel();
-
-            fileChannel.transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
-
-            // Upload image (später ggf. mit classLoader?)
-            MediaAttachment uploadedFile = client.media().uploadMediaAsync(
-                    new FileAsMediaAttachment(tempFile, "image/png")
-            ).execute();
-            String mediaId = uploadedFile.getId();
-
-            // Post status
             String statusText = "The weather in " + weather.getCity() + " is " + weather.getDescription().toLowerCase() + " and the temperature is " + weather.getTemperature() + "°C";
             List<String> mediaIds = Collections.singletonList(mediaId);
             Visibility visibility = Visibility.PUBLIC;
 
             client.statuses().postStatus(statusText, mediaIds, visibility).execute();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
 
+    }
 
+    private String uploadImg(MastodonClient client, File tempFile) throws BigBoneRequestException {
+        MediaAttachment uploadedFile = client.media().uploadMediaAsync(
+                new FileAsMediaAttachment(tempFile, "image/png")
+        ).execute();
+        String mediaId = uploadedFile.getId();
+        return mediaId;
+    }
 
+    private void downloadImg(Weather weather, File tempFile) throws IOException {
+        URL url = new URL("https:" + weather.getIconUrl());
+        ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
 
+        FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
+        FileChannel fileChannel = fileOutputStream.getChannel();
+
+        fileChannel.transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+    }
+
+    private File createFile() throws IOException {
+        File tempFile = File.createTempFile(
+                "icon", ".tmp",
+                new File(System.getProperty("java.io.tmpdir"))); // System property hat gespeichert wo mein temp-Ordner ist
+        System.out.println(
+                "Temporary file is located on Specified location: "
+                        + tempFile.getAbsolutePath());
+        return tempFile;
     }
 }
