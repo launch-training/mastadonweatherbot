@@ -1,6 +1,7 @@
 package com.acn.jive.mastadonweatherbot;
 
 import com.acn.jive.mastadonweatherbot.http.HTTPConnection;
+import com.acn.jive.mastadonweatherbot.mastodon.PostStatus;
 import com.acn.jive.mastadonweatherbot.weather.Weather;
 import com.acn.jive.mastadonweatherbot.weather.WeatherApiService;
 
@@ -11,10 +12,10 @@ public class Main {
         HTTPConnection HTTPConnection = new HTTPConnection();
         WeatherApiService weatherApiService = new WeatherApiService();
         PostStatus postStatus = new PostStatus();
-        try{
+        try {
             Optional<Weather> weather = weatherApiService.readWeatherData("Berlin", HTTPConnection);
-            postStatus.postStatus(weather.get());
-        }catch(Exception e){
+            postStatus.execute(weather.get());
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
