@@ -48,4 +48,11 @@ public class Weather {
     public void setLocalTime(LocalDateTime localTime) {
         this.localTime = localTime;
     }
+
+    @Override
+    public String toString() {
+        return "The weather in " + city
+                + " is " + description.toLowerCase()
+                + " and the temperature is " + temperature + "°C.";
+    }
 }
