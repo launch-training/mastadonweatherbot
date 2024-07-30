@@ -31,7 +31,7 @@ public class PostStatus {
             imageService.download(weather, tempFile);
             String mediaId = uploadImage.execute(client, tempFile);
 
-            String statusText = "The weather in " + weather.getCity() + " is " + weather.getDescription().toLowerCase() + " and the temperature is " + weather.getTemperature() + "°C";
+            String statusText = weather.toString();
             List<String> mediaIds = Collections.singletonList(mediaId);
             Visibility visibility = Visibility.PUBLIC;
 
@@ -40,8 +40,6 @@ public class PostStatus {
             e.printStackTrace();
         }
 
-
     }
-
 
 }

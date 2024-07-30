@@ -13,7 +13,7 @@ public class Main {
         WeatherApiService weatherApiService = new WeatherApiService();
         PostStatus postStatus = new PostStatus();
         try {
-            Optional<Weather> weather = weatherApiService.readWeatherData("Berlin", HTTPConnection);
+            Optional<Weather> weather = weatherApiService.readWeatherData("Augsburg", HTTPConnection);
             postStatus.execute(weather.get());
         } catch (Exception e) {
             e.printStackTrace();
@@ -25,6 +25,5 @@ public class Main {
         Main main = new Main();
         main.run();
     }
-
 
 }
