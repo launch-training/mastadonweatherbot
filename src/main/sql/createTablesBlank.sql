@@ -22,4 +22,4 @@ CREATE TABLE `post_history` (
    UNIQUE KEY `guid_UNIQUE` (`guid`),
    KEY `fk_location_id_idx` (`location_id`),
    CONSTRAINT `fk_location_id` FOREIGN KEY (`location_id`) REFERENCES `location` (`id`)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
