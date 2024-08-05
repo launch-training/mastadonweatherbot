@@ -7,6 +7,7 @@ import com.acn.jive.mastadonweatherbot.persistence.LocationRepository;
 import com.acn.jive.mastadonweatherbot.persistence.PostHistoryRepository;
 import com.acn.jive.mastadonweatherbot.weather.Weather;
 import com.acn.jive.mastadonweatherbot.weather.WeatherApiService;
+import org.json.simple.JSONObject;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -25,10 +26,15 @@ public class Main {
         try {
             List<Location> locations = locationRepository.readAllActiveLocations();
             for (Location location : locations) {
-                Optional<Weather> weather = weatherApiService.readWeatherDataByCoordinates(location, HTTPConnection);
-                if (weather.isPresent()) {
-                    postStatus.execute(weather.get());
+                Optional<JSONObject> jsonObject = weatherApiService.readWeatherDataByCoordinates(location, HTTPConnection);
+                if (jsonObject.isPresent()) {
+                    Weather weather = weatherApiService.createWeatherObjectFromJson(jsonObject.get());
+                    postStatus.execute(weather);
                 }
+                //Optional<Weather> weather = weatherApiService.readWeatherDataByCoordinates(location, HTTPConnection);
+//                if (weather.isPresent()) {
+//                    postStatus.execute(weather.get());
+//                }
                 //todo: error logging if optional weather is empty?
             }
         } catch (Exception e) {
