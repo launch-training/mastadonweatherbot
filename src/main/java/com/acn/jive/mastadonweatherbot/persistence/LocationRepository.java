@@ -22,9 +22,10 @@ public class LocationRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
+                Long id = resultSet.getLong("id");
                 BigDecimal latitude = resultSet.getBigDecimal("latitude");
                 BigDecimal longitude = resultSet.getBigDecimal("longitude");
-                Location location = new Location(latitude, longitude);
+                Location location = new Location(id, latitude, longitude);
                 activeLocations.add(location);
             }
             return activeLocations;
