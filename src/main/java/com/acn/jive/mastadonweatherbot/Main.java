@@ -23,11 +23,12 @@ public class Main {
         try {
             List<Location> locations = locationRepository.readAllActiveLocations();
             for (Location location : locations) {
-                System.out.println(location);
+                Optional<Weather> weather = weatherApiService.readWeatherDataByCoordinates(location, HTTPConnection);
+                postStatus.execute(weather.get());
             }
 
-            Optional<Weather> weather = weatherApiService.readWeatherData("Augsburg", HTTPConnection);
-            postStatus.execute(weather.get());
+//            Optional<Weather> weather = weatherApiService.readWeatherDataByCity("Augsburg", HTTPConnection);
+//            postStatus.execute(weather.get());
         } catch (Exception e) {
             e.printStackTrace();
         }
