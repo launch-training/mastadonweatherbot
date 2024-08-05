@@ -24,11 +24,11 @@ public class Main {
             List<Location> locations = locationRepository.readAllActiveLocations();
             for (Location location : locations) {
                 Optional<Weather> weather = weatherApiService.readWeatherDataByCoordinates(location, HTTPConnection);
-                postStatus.execute(weather.get());
+                if (weather.isPresent()) {
+                    postStatus.execute(weather.get());
+                }
+                //todo: error logging if optional weather is empty?
             }
-
-//            Optional<Weather> weather = weatherApiService.readWeatherDataByCity("Augsburg", HTTPConnection);
-//            postStatus.execute(weather.get());
         } catch (Exception e) {
             e.printStackTrace();
         }
