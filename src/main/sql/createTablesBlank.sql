@@ -18,6 +18,7 @@ CREATE TABLE `post_history` (
    `weather_api_response` json DEFAULT NULL,
    `timestamp_mastodon_posted` datetime DEFAULT NULL,
    `error_logging` varchar(100) DEFAULT NULL,
+   `post_link` varchar(100) DEFAULT NULL,
    `location_id` int NOT NULL,
    PRIMARY KEY (`id`),
    UNIQUE KEY `guid_UNIQUE` (`guid`),
