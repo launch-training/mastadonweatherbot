@@ -4,6 +4,7 @@ import com.acn.jive.mastadonweatherbot.http.HTTPConnection;
 import com.acn.jive.mastadonweatherbot.mastodon.PostStatus;
 import com.acn.jive.mastadonweatherbot.persistence.Location;
 import com.acn.jive.mastadonweatherbot.persistence.LocationRepository;
+import com.acn.jive.mastadonweatherbot.persistence.PostHistoryRepository;
 import com.acn.jive.mastadonweatherbot.weather.Weather;
 import com.acn.jive.mastadonweatherbot.weather.WeatherApiService;
 
@@ -19,6 +20,7 @@ public class Main {
         WeatherApiService weatherApiService = new WeatherApiService();
         PostStatus postStatus = new PostStatus();
         LocationRepository locationRepository = new LocationRepository(connection);
+        PostHistoryRepository postHistoryRepository = new PostHistoryRepository(connection);
 
         try {
             List<Location> locations = locationRepository.readAllActiveLocations();
