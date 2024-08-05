@@ -1,4 +1,4 @@
-INSERT INTO `mastodon`.`location` (`guid`, `name`, `latitude`, `longitude`, `active`) VALUES ('fc01deca-a1e5-41d4-8ea9-e06a310fe9e1', 'Dresden', '51.05', '13.75', '1');
-INSERT INTO `mastodon`.`location` (`guid`, `name`, `latitude`, `longitude`, `active`) VALUES ('e6dbb674-21c0-427a-b60c-9de793046ec3', 'Augsburg', '48.37', '10.88', '1');
-INSERT INTO `mastodon`.`location` (`guid`, `name`, `latitude`, `longitude`, `active`) VALUES ('a3cb0ccc-360b-4291-8b8f-5e49f5913e5d', 'Hamburg', '53.55', '10.0', '1');
-INSERT INTO `mastodon`.`location` (`guid`, `name`, `latitude`, `longitude`, `active`) VALUES ('ae5f55cd-7423-4723-b094-65dfe198017f', 'Berlin', '52.52', '13.4', '0');
+INSERT INTO `mastodon`.`location` (`guid`, `name`, `latitude`, `longitude`, `date_saved`, `active`) VALUES ('fc01deca-a1e5-41d4-8ea9-e06a310fe9e1', 'Dresden', '51.05', '13.75', '2024-08-01 13:17:17', '1');
+INSERT INTO `mastodon`.`location` (`guid`, `name`, `latitude`, `longitude`, `date_saved`, `active`) VALUES ('e6dbb674-21c0-427a-b60c-9de793046ec3', 'Augsburg', '48.37', '10.88', '2024-08-01 13:26:17', '1');
+INSERT INTO `mastodon`.`location` (`guid`, `name`, `latitude`, `longitude`, `date_saved`, `active`) VALUES ('a3cb0ccc-360b-4291-8b8f-5e49f5913e5d', 'Hamburg', '53.55', '10.0', '2024-08-02 14:17:17', '1');
+INSERT INTO `mastodon`.`location` (`guid`, `name`, `latitude`, `longitude`, `date_saved`, `active`) VALUES ('ae5f55cd-7423-4723-b094-65dfe198017f', 'Berlin', '52.52', '13.4', '2024-08-02 15:17:17', '0');
