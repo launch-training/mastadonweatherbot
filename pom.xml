@@ -35,6 +35,11 @@
       <artifactId>bigbone</artifactId>
       <version>2.0.0-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <version>8.4.0</version>
+    </dependency>
   </dependencies>
 
   <repositories>
