@@ -6,6 +6,7 @@ import com.acn.jive.mastadonweatherbot.persistence.Location;
 import com.acn.jive.mastadonweatherbot.persistence.LocationRepository;
 import com.acn.jive.mastadonweatherbot.persistence.PostHistoryRepository;
 import com.acn.jive.mastadonweatherbot.weather.Weather;
+import com.acn.jive.mastadonweatherbot.weather.WeatherApiResponse;
 import com.acn.jive.mastadonweatherbot.weather.WeatherApiService;
 import org.json.simple.JSONObject;
 
@@ -26,9 +27,11 @@ public class Main {
         try {
             List<Location> locations = locationRepository.readAllActiveLocations();
             for (Location location : locations) {
-                Optional<JSONObject> jsonObject = weatherApiService.readWeatherDataByCoordinates(location, HTTPConnection);
-                if (jsonObject.isPresent()) {
-                    Weather weather = weatherApiService.createWeatherObjectFromJson(jsonObject.get());
+
+                WeatherApiResponse weatherApiResponse = weatherApiService.readWeatherDataByCoordinates(location, HTTPConnection);
+                JSONObject jsonObject = weatherApiResponse.getJsonObject();
+                if (jsonObject != null) {
+                    Weather weather = weatherApiService.createWeatherObjectFromJson(jsonObject);
                     postStatus.execute(weather);
                 }
             }
