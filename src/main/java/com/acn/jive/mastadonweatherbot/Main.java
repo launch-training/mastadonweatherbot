@@ -31,11 +31,6 @@ public class Main {
                     Weather weather = weatherApiService.createWeatherObjectFromJson(jsonObject.get());
                     postStatus.execute(weather);
                 }
-                //Optional<Weather> weather = weatherApiService.readWeatherDataByCoordinates(location, HTTPConnection);
-//                if (weather.isPresent()) {
-//                    postStatus.execute(weather.get());
-//                }
-                //todo: error logging if optional weather is empty?
             }
         } catch (Exception e) {
             e.printStackTrace();
