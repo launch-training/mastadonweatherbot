@@ -3,6 +3,7 @@ package com.acn.jive.mastadonweatherbot.mastodon;
 import com.acn.jive.mastadonweatherbot.http.ImageService;
 import com.acn.jive.mastadonweatherbot.weather.Weather;
 import social.bigbone.MastodonClient;
+import social.bigbone.api.entity.Status;
 import social.bigbone.api.entity.data.Visibility;
 import social.bigbone.api.exception.BigBoneRequestException;
 
@@ -37,8 +38,9 @@ public class PostStatus {
             List<String> mediaIds = Collections.singletonList(mediaId);
             Visibility visibility = Visibility.PUBLIC;
 
-            client.statuses().postStatus(statusText, mediaIds, visibility).execute();
+            Status status = client.statuses().postStatus(statusText, mediaIds, visibility).execute();
             mastodonPost.setPostTimestamp(LocalDateTime.now());
+            mastodonPost.setPostLink(status.getUrl());
             return mastodonPost;
 
         } catch (IOException | BigBoneRequestException ex) {
