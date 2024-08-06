@@ -1,6 +1,7 @@
 package com.acn.jive.mastadonweatherbot;
 
 import com.acn.jive.mastadonweatherbot.http.HTTPConnection;
+import com.acn.jive.mastadonweatherbot.mastodon.MastodonPost;
 import com.acn.jive.mastadonweatherbot.mastodon.PostStatus;
 import com.acn.jive.mastadonweatherbot.persistence.Location;
 import com.acn.jive.mastadonweatherbot.persistence.LocationRepository;
@@ -32,7 +33,7 @@ public class Main {
                 JSONObject jsonObject = weatherApiResponse.getJsonObject();
                 if (jsonObject != null) {
                     Weather weather = weatherApiService.createWeatherObjectFromJson(jsonObject);
-                    postStatus.execute(weather);
+                    MastodonPost mastodonPost = postStatus.execute(weather);
                 }
                 //todo else evtl. error logging
             }
