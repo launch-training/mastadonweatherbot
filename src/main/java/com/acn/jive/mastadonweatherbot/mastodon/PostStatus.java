@@ -3,11 +3,13 @@ package com.acn.jive.mastadonweatherbot.mastodon;
 import com.acn.jive.mastadonweatherbot.http.ImageService;
 import com.acn.jive.mastadonweatherbot.weather.Weather;
 import social.bigbone.MastodonClient;
+import social.bigbone.api.entity.Status;
 import social.bigbone.api.entity.data.Visibility;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,9 +18,10 @@ public class PostStatus {
     private static final String INSTANCE = "mastodon.social";
     private static final String ACCESS_TOKEN = "j1teFkzqidPCXSsl9iBLfjy3csKpLKtnNnPwkfqJOIg";
 
-    public void execute(Weather weather) throws BigBoneRequestException {
+    public MastodonPost execute(Weather weather) throws MastodonException {
         ImageService imageService = new ImageService();
         UploadImage uploadImage = new UploadImage();
+        MastodonPost mastodonPost = new MastodonPost();
 
         // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(INSTANCE)
@@ -35,11 +38,14 @@ public class PostStatus {
             List<String> mediaIds = Collections.singletonList(mediaId);
             Visibility visibility = Visibility.PUBLIC;
 
-            client.statuses().postStatus(statusText, mediaIds, visibility).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Status status = client.statuses().postStatus(statusText, mediaIds, visibility).execute();
+            mastodonPost.setPostTimestamp(LocalDateTime.now());
+            mastodonPost.setPostLink(status.getUrl());
+            return mastodonPost;
 
+        } catch (IOException | BigBoneRequestException ex) {
+            throw new MastodonException("An exception occurred while trying to post to Mastodon", ex);
+        }
     }
 
 }

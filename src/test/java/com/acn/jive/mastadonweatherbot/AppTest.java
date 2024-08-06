@@ -1,4 +1,4 @@
-package com.acn.jive.mastadon-weather;
+package com.acn.jive.mastadonweatherbot;
 
 import static org.junit.Assert.assertTrue;
 
