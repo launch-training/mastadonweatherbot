@@ -34,7 +34,7 @@ public class Main {
                 if (jsonObject != null) {
                     Weather weather = weatherApiService.createWeatherObjectFromJson(jsonObject);
                     MastodonPost mastodonPost = postStatus.execute(weather);
-                    System.out.println(mastodonPost.getPostLink());
+                    postHistoryRepository.saveMastodonPostInfo(mastodonPost, id);
                 }
                 //todo else evtl. error logging
             }

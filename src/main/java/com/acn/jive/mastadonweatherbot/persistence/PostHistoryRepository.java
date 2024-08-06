@@ -1,5 +1,6 @@
 package com.acn.jive.mastadonweatherbot.persistence;
 
+import com.acn.jive.mastadonweatherbot.mastodon.MastodonPost;
 import com.acn.jive.mastadonweatherbot.weather.WeatherApiResponse;
 
 import java.sql.*;
@@ -34,6 +35,20 @@ public class PostHistoryRepository {
             }
         } catch (SQLException ex) {
             throw new RepositoryException("An exception occurred while saving the weather api response to the database", ex);
+        }
+    }
+
+    public void saveMastodonPostInfo(MastodonPost mastodonPost, Long id) throws RepositoryException {
+        Timestamp timestamp = Timestamp.valueOf(mastodonPost.getPostTimestamp());
+        String postLink = mastodonPost.getPostLink();
+        String sql = "UPDATE post_history SET timestamp_mastodon_posted = ?, post_link = ? WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setTimestamp(1, timestamp);
+            preparedStatement.setString(2, postLink);
+            preparedStatement.setLong(3, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RepositoryException("An exception occurred while saving the mastodon post info to the database", ex);
         }
     }
 
