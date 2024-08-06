@@ -28,13 +28,13 @@ public class Main {
             List<Location> locations = locationRepository.readAllActiveLocations();
             for (Location location : locations) {
                 WeatherApiResponse weatherApiResponse = weatherApiService.readWeatherDataByCoordinates(location, HTTPConnection);
-                postHistoryRepository.saveWeatherApiResponse(weatherApiResponse, location);
-
+                Long id = postHistoryRepository.saveWeatherApiResponse(weatherApiResponse, location);
                 JSONObject jsonObject = weatherApiResponse.getJsonObject();
                 if (jsonObject != null) {
                     Weather weather = weatherApiService.createWeatherObjectFromJson(jsonObject);
-                    //postStatus.execute(weather);
+                    postStatus.execute(weather);
                 }
+                //todo else evtl. error logging
             }
         } catch (Exception e) {
             e.printStackTrace();
