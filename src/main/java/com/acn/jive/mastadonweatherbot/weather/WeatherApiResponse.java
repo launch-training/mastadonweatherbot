@@ -1,9 +1,7 @@
 package com.acn.jive.mastadonweatherbot.weather;
 
 import org.json.simple.JSONObject;
-
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 public class WeatherApiResponse {
 

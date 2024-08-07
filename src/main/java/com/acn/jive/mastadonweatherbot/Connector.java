@@ -20,5 +20,4 @@ public class Connector {
         System.out.println("Connected to database");
         return conn;
     }
-
 }

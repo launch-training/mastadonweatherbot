@@ -1,12 +1,12 @@
 package com.acn.jive.mastadonweatherbot.mastodon;
 
 import com.acn.jive.mastadonweatherbot.http.ImageService;
+import com.acn.jive.mastadonweatherbot.http.ImageServiceException;
 import com.acn.jive.mastadonweatherbot.weather.Weather;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.entity.data.Visibility;
 import social.bigbone.api.exception.BigBoneRequestException;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -23,12 +23,10 @@ public class PostStatus {
         UploadImage uploadImage = new UploadImage();
         MastodonPost mastodonPost = new MastodonPost();
 
-        // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(INSTANCE)
                 .accessToken(ACCESS_TOKEN)
                 .build();
 
-        // Download image from URL weather.getUrl()
         try {
             File tempFile = imageService.createFile();
             imageService.download(weather, tempFile);
@@ -45,7 +43,7 @@ public class PostStatus {
             mastodonPost.setDescription(statusText);
             return mastodonPost;
 
-        } catch (IOException | BigBoneRequestException ex) {
+        } catch (BigBoneRequestException | ImageServiceException ex) {
             throw new MastodonException("An exception occurred while trying to post to Mastodon", ex);
         }
     }
