@@ -19,6 +19,8 @@ CREATE TABLE `post_history` (
    `timestamp_mastodon_posted` datetime DEFAULT NULL,
    `error_logging` varchar(100) DEFAULT NULL,
    `post_link` varchar(100) DEFAULT NULL,
+   `icon_url` varchar(244) DEFAULT NULL,
+   `description` varchar(244) DEFAULT NULL,
    `location_id` int NOT NULL,
    PRIMARY KEY (`id`),
    UNIQUE KEY `guid_UNIQUE` (`guid`),

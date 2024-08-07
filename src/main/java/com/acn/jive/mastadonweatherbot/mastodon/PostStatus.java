@@ -41,6 +41,8 @@ public class PostStatus {
             Status status = client.statuses().postStatus(statusText, mediaIds, visibility).execute();
             mastodonPost.setPostTimestamp(LocalDateTime.now());
             mastodonPost.setPostLink(status.getUrl());
+            mastodonPost.setIconUrl(weather.getIconUrl());
+            mastodonPost.setDescription(statusText);
             return mastodonPost;
 
         } catch (IOException | BigBoneRequestException ex) {

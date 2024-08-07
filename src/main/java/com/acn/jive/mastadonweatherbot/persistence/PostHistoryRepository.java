@@ -41,11 +41,13 @@ public class PostHistoryRepository {
     public void saveMastodonPostInfo(MastodonPost mastodonPost, Long id) throws RepositoryException {
         Timestamp timestamp = Timestamp.valueOf(mastodonPost.getPostTimestamp());
         String postLink = mastodonPost.getPostLink();
-        String sql = "UPDATE post_history SET timestamp_mastodon_posted = ?, post_link = ? WHERE id = ?";
+        String sql = "UPDATE post_history SET timestamp_mastodon_posted = ?, post_link = ?, icon_url = ?, description = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setTimestamp(1, timestamp);
             preparedStatement.setString(2, postLink);
-            preparedStatement.setLong(3, id);
+            preparedStatement.setString(3, mastodonPost.getIconUrl());
+            preparedStatement.setString(4, mastodonPost.getDescription());
+            preparedStatement.setLong(5, id);
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             throw new RepositoryException("An exception occurred while saving the mastodon post info to the database", ex);
