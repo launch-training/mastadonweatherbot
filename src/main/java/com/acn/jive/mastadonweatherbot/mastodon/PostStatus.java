@@ -16,7 +16,7 @@ import java.util.List;
 public class PostStatus {
 
     private static final String INSTANCE = "mastodon.social";
-    private static final String ACCESS_TOKEN = "j1teFkzqidPCXSsl9iBLfjy3csKpLKtnNnPwkfqJOIg";
+    private static final String ACCESS_TOKEN = System.getenv("Mastodon_Access_Token");
 
     public MastodonPost execute(Weather weather) throws MastodonException {
         ImageService imageService = new ImageService();
