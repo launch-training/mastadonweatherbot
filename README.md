@@ -26,6 +26,7 @@ To run please:
   - Export means: create the variable
     - export db_user=root
     - export db_pass=secret
+    - export db_url=jdbc:mysql://localhost:3306/mastodon
     - export Mastodon_Access_Token=<your token>
 - Start the shell script:
   - ./start-bot.sh
