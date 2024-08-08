@@ -23,8 +23,11 @@ public class Connector {
     }
 
     private String envOrDefault(String key, String dflt) {
+        System.out.println("Searching for key " + key);
         String value = System.getenv(key);
-        if (value == null) {
+        System.out.println("Found value " + value);
+        if (value == null || value.isEmpty()) {
+            System.out.println("Returning default " + dflt);
             return dflt;
         }
         return value;
