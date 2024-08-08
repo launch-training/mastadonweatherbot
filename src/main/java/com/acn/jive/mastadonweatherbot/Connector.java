@@ -8,16 +8,8 @@ import java.util.Properties;
 public class Connector {
 
     public Connection getConnection() throws SQLException {
-
-        String dbUser = System.getenv("db_user");
-        String dbPass = System.getenv("db_pass");
-
-        if (dbUser == null) {
-            dbUser = "root";
-        }
-        if (dbPass == null) {
-            dbPass = "";
-        }
+        String dbUser = envOrDefault("db_user", "root");
+        String dbPass = envOrDefault("db_pass", "");
 
         Properties connectionProps = new Properties();
         connectionProps.put("user", dbUser);
@@ -29,5 +21,13 @@ public class Connector {
 
         System.out.println("Connected to database");
         return conn;
+    }
+
+    private String envOrDefault(String key, String dflt) {
+        String value = System.getenv(key);
+        if (value == null) {
+            return dflt;
+        }
+        return value;
     }
 }
