@@ -10,14 +10,13 @@ public class Connector {
     public Connection getConnection() throws SQLException {
         String dbUser = envOrDefault("db_user", "root");
         String dbPass = envOrDefault("db_pass", "");
+        String dbUrl = envOrDefault("db_url", "jdbc:mysql://localhost:3306/mastodon");
 
         Properties connectionProps = new Properties();
         connectionProps.put("user", dbUser);
         connectionProps.put("password", dbPass);
 
-        Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/mastodon",
-                connectionProps);
+        Connection conn = DriverManager.getConnection(dbUrl, connectionProps);
 
         System.out.println("Connected to database");
         return conn;
