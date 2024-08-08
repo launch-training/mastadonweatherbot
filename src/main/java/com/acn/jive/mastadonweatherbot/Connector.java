@@ -9,9 +9,19 @@ public class Connector {
 
     public Connection getConnection() throws SQLException {
 
+        String dbUser = System.getenv("db_user");
+        String dbPass = System.getenv("db_pass");
+
+        if (dbUser == null) {
+            dbUser = "root";
+        }
+        if (dbPass == null) {
+            dbPass = "";
+        }
+
         Properties connectionProps = new Properties();
-        connectionProps.put("user", "root");
-        connectionProps.put("password", "");
+        connectionProps.put("user", dbUser);
+        connectionProps.put("password", dbPass);
 
         Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/mastodon",
