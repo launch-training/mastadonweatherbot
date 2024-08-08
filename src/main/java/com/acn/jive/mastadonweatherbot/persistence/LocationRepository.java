@@ -10,7 +10,7 @@ import java.util.List;
 
 public class LocationRepository {
 
-    private Connection connection;
+    private final Connection connection;
 
     public LocationRepository(Connection connection) {
         this.connection = connection;
@@ -33,5 +33,4 @@ public class LocationRepository {
             throw new RepositoryException("An exception occurred while selecting active locations from the database", ex);
         }
     }
-
 }

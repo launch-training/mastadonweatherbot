@@ -4,16 +4,16 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HTTPConnection {
+public class HttpConnection {
 
-    public HttpURLConnection createApiConnection(String urlString) throws IOException{
-            // attempt to create connection
+    public HttpURLConnection createApiConnection(String urlString) throws HttpException {
+        try {
             URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            // set request method to get
             conn.setRequestMethod("GET");
-
             return conn;
+        } catch(IOException ex) {
+            throw new HttpException("An exception occurred while creating the Http-URL-Connection ", ex);
+        }
     }
 }

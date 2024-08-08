@@ -1,7 +1,6 @@
 package com.acn.jive.mastadonweatherbot.persistence;
 
 import org.json.simple.JSONObject;
-
 import java.time.LocalDateTime;
 
 public class PostHistory {

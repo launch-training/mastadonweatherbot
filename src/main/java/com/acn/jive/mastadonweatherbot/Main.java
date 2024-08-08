@@ -1,6 +1,6 @@
 package com.acn.jive.mastadonweatherbot;
 
-import com.acn.jive.mastadonweatherbot.http.HTTPConnection;
+import com.acn.jive.mastadonweatherbot.http.HttpConnection;
 import com.acn.jive.mastadonweatherbot.mastodon.MastodonException;
 import com.acn.jive.mastadonweatherbot.mastodon.MastodonPost;
 import com.acn.jive.mastadonweatherbot.mastodon.PostStatus;
@@ -13,16 +13,14 @@ import com.acn.jive.mastadonweatherbot.weather.WeatherApiResponse;
 import com.acn.jive.mastadonweatherbot.weather.WeatherApiService;
 import com.acn.jive.mastadonweatherbot.weather.WeatherException;
 import org.json.simple.JSONObject;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 public class Main {
 
     public void run(Connection connection) {
-        HTTPConnection HTTPConnection = new HTTPConnection();
+        HttpConnection HTTPConnection = new HttpConnection();
         WeatherApiService weatherApiService = new WeatherApiService();
         PostStatus postStatus = new PostStatus();
         LocationRepository locationRepository = new LocationRepository(connection);
@@ -39,7 +37,6 @@ public class Main {
                     MastodonPost mastodonPost = postStatus.execute(weather);
                     postHistoryRepository.saveMastodonPostInfo(mastodonPost, id);
                 }
-                //todo else evtl. error logging
             }
         } catch (RepositoryException | WeatherException | MastodonException ex) {
             ex.printStackTrace();
@@ -56,5 +53,4 @@ public class Main {
             ex.printStackTrace();
         }
     }
-
 }
