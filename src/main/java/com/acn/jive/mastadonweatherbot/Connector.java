@@ -1,11 +1,15 @@
 package com.acn.jive.mastadonweatherbot;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
 public class Connector {
+    private static final Logger logger = LogManager.getLogger();
 
     public Connection getConnection() throws SQLException {
         String dbUser = envOrDefault("db_user", "root");
@@ -18,16 +22,19 @@ public class Connector {
 
         Connection conn = DriverManager.getConnection(dbUrl, connectionProps);
 
-        System.out.println("Connected to database");
+        logger.info("Connected to database");
+
         return conn;
     }
 
     private String envOrDefault(String key, String dflt) {
-        System.out.println("Searching for key " + key);
+        logger.debug("Searching for key: {}", key);
+
         String value = System.getenv(key);
-        System.out.println("Found value " + value);
+        logger.debug("Searching for value: {}", value);
+
         if (value == null || value.isEmpty()) {
-            System.out.println("Returning default " + dflt);
+            logger.debug("Returning default: {}", dflt);
             return dflt;
         }
         return value;

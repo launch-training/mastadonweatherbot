@@ -12,12 +12,15 @@ import com.acn.jive.mastadonweatherbot.weather.Weather;
 import com.acn.jive.mastadonweatherbot.weather.WeatherApiResponse;
 import com.acn.jive.mastadonweatherbot.weather.WeatherApiService;
 import com.acn.jive.mastadonweatherbot.weather.WeatherException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 public class Main {
+    private static final Logger logger = LogManager.getLogger();
 
     public void run(Connection connection) {
         HttpConnection HTTPConnection = new HttpConnection();
@@ -39,18 +42,18 @@ public class Main {
                 }
             }
         } catch (RepositoryException | WeatherException | MastodonException ex) {
-            ex.printStackTrace();
+            logger.error("Could not run job", ex);
         }
     }
 
     public static void main(String[] args) {
+        logger.info("Application started.");
         Main main = new Main();
         Connector connector = new Connector();
         try (Connection connection = connector.getConnection()) {
             main.run(connection);
         } catch (SQLException ex) {
-            System.out.println("The connection to the database failed!");
-            ex.printStackTrace();
+            logger.error("Connection to DB failed", ex);
         }
     }
 }
