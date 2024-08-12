@@ -18,7 +18,8 @@ public class WeatherApiService {
     public WeatherApiResponse readWeatherDataByCoordinates (Location location, HttpConnection HTTPConnection) throws WeatherException {
         try {
             WeatherApiResponse weatherApiResponse = new WeatherApiResponse();
-            String API_KEY = "437ff40d4bf2412581d135526241807";
+
+            String API_KEY = System.getenv("weather_api");
             BigDecimal latitude = location.getLatitude();
             BigDecimal longitude = location.getLongitude();
             String url = "https://api.weatherapi.com/v1/current.json?key=" + API_KEY + "&q=" + latitude + "," + longitude;
