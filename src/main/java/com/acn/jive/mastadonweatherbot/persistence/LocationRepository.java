@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocationRepository {
-    private final static Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
     private final Connection connection;
 
